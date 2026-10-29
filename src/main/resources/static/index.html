@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ClauseLens AI — evidence-first policy intelligence with verifiable citations.">
+  <title>ClauseLens AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="noise"></div>
+<header>
+  <a class="brand" href="#"><span class="mark">CL</span><span>ClauseLens <b>AI</b></span></a>
+  <div class="status"><i></i> Offline-first · evidence locked</div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">POLICY INTELLIGENCE / JAVA 17</div>
+    <h1>Ask difficult questions.<br><em>Show every source.</em></h1>
+    <p>Multi-agent compliance analysis that scopes retrieval, surfaces risk and refuses to invent policy.</p>
+    <div class="hero-actions">
+      <button id="demo" class="primary">Run governance demo <span>→</span></button>
+      <a href="https://github.com/thillainirmal-tech/ClauseLens-AI" target="_blank" rel="noreferrer">View source ↗</a>
+    </div>
+  </section>
+
+  <section class="metrics">
+    <article><strong id="docCount">4</strong><span>indexed policies</span></article>
+    <article><strong>4</strong><span>specialist agents</span></article>
+    <article><strong>0</strong><span>API keys required</span></article>
+    <article><strong>100%</strong><span>claims cited</span></article>
+  </section>
+
+  <section class="workspace">
+    <div class="panel query-panel">
+      <div class="panel-title"><span>01</span> Ask ClauseLens</div>
+      <label for="question">Policy question</label>
+      <textarea id="question" rows="5">Can an engineer paste customer data into a public AI tool and let it make an automated eligibility decision?</textarea>
+      <div class="filters">
+        <label>Department<select id="department"><option>all</option><option selected>Engineering</option><option>HR</option><option>Security</option><option>Procurement</option></select></label>
+        <label>Jurisdiction<select id="jurisdiction"><option selected>Global</option><option>EU</option></select></label>
+      </div>
+      <button id="analyze" class="primary wide">Analyze against policy</button>
+      <div class="privacy">🔒 Documents stay local. Retrieval is deterministic and inspectable.</div>
+    </div>
+
+    <div class="panel result-panel">
+      <div class="panel-title"><span>02</span> Evidence brief <div id="confidence" class="confidence">READY</div></div>
+      <div id="empty" class="empty">
+        <div class="lens">⌁</div>
+        <h2>Evidence, not guesswork</h2>
+        <p>Run the demo or ask a policy question to see citations, risk findings and the full agent trace.</p>
+      </div>
+      <div id="result" hidden>
+        <div id="answer" class="answer"></div>
+        <h3>Verified evidence</h3>
+        <div id="evidence" class="evidence-grid"></div>
+        <h3>Control findings</h3>
+        <div id="risks" class="risk-grid"></div>
+        <h3>Agent trace</h3>
+        <div id="trace" class="trace"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="architecture">
+    <div><span>Scope</span><small>metadata boundaries</small></div><b>→</b>
+    <div><span>Retrieve</span><small>cosine ranking</small></div><b>→</b>
+    <div><span>Assess</span><small>control detection</small></div><b>→</b>
+    <div><span>Verify</span><small>citation guard</small></div>
+  </section>
+</main>
+<footer><span>ClauseLens AI · Open source policy intelligence</span><span>Spring Boot · PDFBox · Prometheus · Docker</span></footer>
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: clauselens-ai
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
+server:
+  port: ${PORT:8081}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+info:
+  app:
+    name: ClauseLens AI
+    description: Evidence-first policy intelligence
