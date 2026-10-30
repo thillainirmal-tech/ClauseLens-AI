@@ -54,10 +54,4 @@ public class ClauseLensController {
         return orchestrator.evaluate(request);
     }
 
-    @GetMapping("/demo")
-    public QueryResponse demo() {
-        return orchestrator.evaluate(new QueryRequest(
-                "Can an engineer paste customer data into a public AI tool and let it make an automated eligibility decision?",
-                "Engineering", "Global"));
-    }
 }

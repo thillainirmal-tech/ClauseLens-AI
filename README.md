@@ -13,7 +13,7 @@ Uploaded PDF indexes now survive restarts in an atomically replaced durable stor
 
 </div>
 
-ClauseLens AI turns policy documents into defensible, cited compliance briefs. Four transparent agents scope retrieval, rank evidence, detect control risks and verify citations. It runs offline with deterministic local embeddings, so the demo needs no paid model or API key.
+ClauseLens AI turns policy documents into defensible, cited compliance briefs. Four transparent stages scope retrieval, rank evidence, detect control risks and verify citations. Deterministic local retrieval keeps decisions repeatable and removes model availability from the evidence path.
 
 ## Why this project
 
@@ -58,7 +58,6 @@ Useful endpoints:
 - `GET /api/documents` — list indexed policies
 - `POST /api/documents` — upload a PDF with optional metadata
 - `POST /api/query` — generate an evidence brief
-- `GET /api/demo` — deterministic governance demo
 - `GET /actuator/health` — health probe
 - `GET /actuator/prometheus` — metrics
 
@@ -80,7 +79,7 @@ curl -X POST http://localhost:8081/api/documents \
   -F "version=1.0"
 ```
 
-Only synthetic or public documents should be used. Uploaded text is stored in process memory and disappears when the application stops.
+Uploaded indexes are atomically persisted at `CLAUSELENS_STORE_PATH`. Production deployments should use an encrypted persistent volume, authenticated ingress and an organizational retention policy.
 
 ## Test
 

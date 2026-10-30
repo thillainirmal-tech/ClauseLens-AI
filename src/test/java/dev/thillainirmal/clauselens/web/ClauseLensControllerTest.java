@@ -19,13 +19,10 @@ class ClauseLensControllerTest {
     @Autowired MockMvc mockMvc;
 
     @Test
-    void exposesDocumentsAndDemo() throws Exception {
+    void exposesIndexedDocuments() throws Exception {
         mockMvc.perform(get("/api/documents"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(4));
-        mockMvc.perform(get("/api/demo"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.grounded").value(true));
     }
 
     @Test
