@@ -2,6 +2,8 @@
 
 # ClauseLens AI
 
+Uploaded PDF indexes now survive restarts in an atomically replaced durable store (`CLAUSELENS_STORE_PATH`, mounted by the supplied Compose stack). Extraction rejects oversized and extreme-page-count documents before indexing. Retrieval and final answers remain evidence-first: when no indexed passage clears the relevance threshold, the service refuses to invent an answer.
+
 ### Evidence-first policy intelligence for teams that cannot afford hallucinations
 
 [![CI](https://github.com/thillainirmal-tech/ClauseLens-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/thillainirmal-tech/ClauseLens-AI/actions/workflows/ci.yml)

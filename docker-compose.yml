@@ -5,3 +5,13 @@ services:
       - "8081:8081"
     environment:
       PORT: 8081
+      CLAUSELENS_STORE_PATH: /data/policies.json
+    volumes:
+      - clauselens-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  clauselens-data:

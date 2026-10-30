@@ -3,6 +3,10 @@ package dev.thillainirmal.clauselens.service;
 import dev.thillainirmal.clauselens.model.DocumentSummary;
 import dev.thillainirmal.clauselens.model.PolicyDocument;
 import jakarta.annotation.PostConstruct;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -14,13 +18,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 @Service
 public class PolicyKnowledgeBase {
     private final Map<String, PolicyDocument> documents = new ConcurrentHashMap<>();
+    private final ObjectMapper mapper;
+    private final Path storePath;
+
+    public PolicyKnowledgeBase() { this.mapper = null; this.storePath = null; }
+
+    @Autowired
+    public PolicyKnowledgeBase(ObjectMapper mapper, @Value("${clauselens.store-path:./data/policies.json}") String storePath) {
+        this.mapper = mapper;
+        this.storePath = Path.of(storePath).toAbsolutePath().normalize();
+    }
 
     @PostConstruct
     void seed() {
+        load();
         add("Remote Work & Access Policy", "HR", "Global", "3.2", List.of(
                 "Remote access requires company-managed devices, full-disk encryption, automatic security updates and multi-factor authentication.",
                 "Employees may work outside their home country for no more than 20 business days without written HR and tax approval.",
@@ -54,6 +72,7 @@ public class PolicyKnowledgeBase {
                     PolicyDocument document = new PolicyDocument(UUID.randomUUID().toString(), fingerprint,
                             title, department, jurisdiction, version, Instant.now(), sections);
                     documents.put(document.id(), document);
+                    persist();
                     return document;
                 });
     }
@@ -74,6 +93,29 @@ public class PolicyKnowledgeBase {
                     .digest(value.getBytes(StandardCharsets.UTF_8)));
         } catch (Exception exception) {
             throw new IllegalStateException("Unable to fingerprint document", exception);
+        }
+    }
+
+    private void load() {
+        if (mapper == null || !Files.exists(storePath)) return;
+        try {
+            List<PolicyDocument> stored = mapper.readValue(storePath.toFile(), new TypeReference<>() {});
+            stored.forEach(document -> documents.put(document.id(), document));
+        } catch (Exception exception) {
+            throw new IllegalStateException("Unable to load the durable policy index", exception);
+        }
+    }
+
+    private void persist() {
+        if (mapper == null) return;
+        try {
+            Files.createDirectories(storePath.getParent());
+            Path temporary = storePath.resolveSibling(storePath.getFileName() + ".tmp");
+            mapper.writeValue(temporary.toFile(), documents());
+            try { Files.move(temporary, storePath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE); }
+            catch (java.nio.file.AtomicMoveNotSupportedException ignored) { Files.move(temporary, storePath, StandardCopyOption.REPLACE_EXISTING); }
+        } catch (Exception exception) {
+            throw new IllegalStateException("Unable to persist the policy index", exception);
         }
     }
 }
