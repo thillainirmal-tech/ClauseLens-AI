@@ -13,6 +13,14 @@ Uploaded PDF indexes now survive restarts in an atomically replaced durable stor
 
 </div>
 
+## Product tour
+
+![ClauseLens AI evidence-first policy console](docs/media/product-tour.gif)
+
+[Open the full-resolution screenshot](docs/media/product-console.jpg) · **Recruiter demo:** ingest a PDF, ask a scoped policy question, then inspect citations, control findings and the processing trace.
+
+> **Deployment status:** tested, containerized and ready for an AWS deployment; no public production endpoint is claimed yet.
+
 ClauseLens AI turns policy documents into defensible, cited compliance briefs. Four transparent stages scope retrieval, rank evidence, detect control risks and verify citations. Deterministic local retrieval keeps decisions repeatable and removes model availability from the evidence path.
 
 ## Why this project
